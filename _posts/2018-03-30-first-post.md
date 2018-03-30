@@ -14,13 +14,6 @@ What a wonderful post!
 
 
 
-```R
-data=readLines("/Users/merihbozbura/Documents/THESIS RELATED/WinSCP
-/edt-—5-DJF-ERA-N40-c2-c01—2")
-
-data=data[-(1:4)]
-```
-
 ```python
 
 
