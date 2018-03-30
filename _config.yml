@@ -8,4 +8,4 @@ github_username: merihbozbura
 
 # Build settings
 markdown: kramdown
-theme: minima
+theme: jekyll-theme-cayman
