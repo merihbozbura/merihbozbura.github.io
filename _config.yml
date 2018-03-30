@@ -1,1 +1,11 @@
+# basic options
+title: My new awesome blog
+author: Merih Bozbura
+email: merihbozbura@gmail.com
+description: What a wonderful blog
+github_username: merihbozbura
+
+
+# Build settings
+markdown: kramdown
 theme: jekyll-theme-cayman
