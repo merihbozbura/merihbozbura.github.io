@@ -16,51 +16,6 @@ What a wonderful post!
 
 ```python
 
-
-######################################################################################
-######################################################################################
-                                                                              ########
-                                                                              ########
-import numpy as np                                                            ########
-                                                                              ########
-import Scientific.IO.NetCDF as si                                             ########
-                                                                              ########
-import netCDF4                                                                ########
-                                                                              ########
-from netCDF4 import Dataset                                                   ########
-                                                                              ########
-import datetime                                                               ########
-                                                                              ########
-                                                                              ########
-                                                                              ########
-# import multiprocessing as mp                                                ########
-#import matplotlib.pyplot as plt                                              ########
-#from mpl_toolkits.basemap import Basemap, addcyclic, shiftgrid               ########
-                                                                              ########
-                                                                              ########
-                                                                              ########
-######################################################################################
-######################################################################################
-
-
-path='/home/maryjane/1000_850_500_geopotantial_height.nc'
-
-
-#### Time conversion
-
-'''
-f = Dataset(path)
-
-p1000 = f.variables['z'][0,2,35,55]
-time_var = f.variables['time']
-dtime = netCDF4.num2date(time_var[:],time_var.units)
-
-'''
-#########################################################################
-
-
-
-
 def minimum (time1, time2, lat1,lat2,lon1,lon2):
 
 
@@ -132,7 +87,7 @@ def minimum (time1, time2, lat1,lat2,lon1,lon2):
 
 minimum(54964,54966,37,39,53,55)
 
-
+```
 
 
 
