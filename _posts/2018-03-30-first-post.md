@@ -27,11 +27,15 @@ Strong positive phase of NAO is associated with lower than normal temperatures o
 Therefore, NAO is expected to have an impact on Turkey. Weather and climate conditions are controlled by NAO in Mediterranean basin along with Turkey.
 
 
+
 #### **Data and Method**
 
-Precipitation data is observation data and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. ![Image of the dataset](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true)
+Precipitation data is observation data and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
 
-Firstly, exploratory data analy- sis are applied to understand fundamentals features of precipitation data. Secondly, linear regression is applied to see whether there is a relationship between NAO and precipitation or not. Finally, principle component analysis is applied to understand effect of NAO on precipitation. 
+![Image of the dataset](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true)
+
+Firstly, exploratory data analysis are applied to understand fundamentals features of precipitation data. Secondly, linear regression is applied to see whether there is a relationship between NAO and precipitation or not. Finally, principle component analysis is applied to understand effect of NAO on precipitation. 
+
 
 
 #### **Exploratory Data Analysis**
@@ -40,14 +44,16 @@ Exploratory data analysis is an approach to analyse a data. Hypothesis is determ
 
 Firstly, the csv file was read and then Shapiro-Wilk normality test is applied the precipitation data. P-values of Marmara, Ege, Karad- eniz, Akdeniz, Ic Anadolu, Dogu Anadolu, and Guneydogu Anadolu regions are respectively 0.001137, 2.65e-15, 2.2e- 16, 1.884e-12, 3.409e-13, 2.2e-16, and 3.668e-06. So, the null hypothesis of Shapiro-Wilk normality test that is the samples come from a normal distribution is rejected.
 
+Csv file was read with **read.csv** and **subset** funciton was used to subset the data. Only processes of Marmara Region was shown as the example below.
 
-
-```{r}
+```r
 P<-read.csv("Toplam_Yagis_Nao.csv",header = TRUE, sep=',') # Reads csv file
 PPrep<-P[,-1] # Remove first line which is header
 egeReg<-subset(PPrep,select = c("afyn","aydn","dnzl","izmr","kthy","mnis","mgla","usak")) # subsetting the data
 shapiro.test(as.numeric(unlist(egeReg)))
 ```
+
+
 
 
 
