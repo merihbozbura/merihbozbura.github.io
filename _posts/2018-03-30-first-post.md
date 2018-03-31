@@ -18,7 +18,7 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
 
 
 
-##### ** 1.Introduction**
+##### **1.Introduction**
 
 The North Atlantic Oscillation (NAO) is a large-scale natural climate variability that has important impacts on the weather and climate of the North Atlantic region and surrounding continents, especially Europe. [#2]
 
@@ -28,7 +28,7 @@ Therefore, NAO is expected to have an impact on Turkey. Weather and climate cond
 
 
 
-##### ** 2.Data and Method**
+##### **2.Data and Method**
 
 Precipitation data is observation data and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
 
@@ -36,7 +36,7 @@ Firstly, exploratory data analysis are applied to understand fundamentals featur
 
 
 
- ##### ** 3.Exploratory Data Analysis**
+ ##### **3.Exploratory Data Analysis**
 
 Exploratory data analysis is an approach to analyse a data. [#3] Hypothesis is determined as there is a relationship between precipitation and NAO for this study.
 
@@ -57,13 +57,13 @@ shapiro.test(as.numeric(unlist(marmaraReg)))
 
 If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true)
 
-Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.[#4]
+Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.
 
 ![marmaraHist.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true) 
 
 Before constructing the histogram we need to split the data into intervals called bins. For all regions the equation below was used for bin width. **h** is bin width, **c** is a constant in the range of 2.0 and 2.6 (2.6 is optimal for Gaussian data), **IQR** is interquartile range, and **n** is number of data.
 
-    h=(c*IQR)/(n1/3)    
+    h=(c*IQR)/(n^1/3)    
 
 ```r
 IQR_marmaraReg = IQR(as.numeric(unlist(marmaraReg))) #interquartile range
@@ -95,7 +95,7 @@ Also, a barplot was plotted with **barplot** to see is there any oddness in the 
 ![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true)
 
 
- ##### ** 4.Linear Regression**
+ ##### **4.Linear Regression**
 
 Turkey has seven regions and linear regression is applied between each region and NAO index with **lm** function. P-values of Marmara, Ege, Karadeniz, Akdeniz, Ic Anadolu, Dogu Anadolu, and Guneydogu Anadolu regions are respectively 0.003816, 0.1888, 0.05551, 0.4469, 0.7868, 0.9588, and 0.7791. Only, Marmara region rejects the null hypothesis which is there is no relationship between precipitation and NAO. However other regions do not reject the null hypothesis. With **plot(fit_marmaraReg,which=1:4)**, Residual vs Fitted, Normal Q-Q, Scale Location, and Cook’s distance were plotted.
 
@@ -118,7 +118,10 @@ The **summary** of the linear model between Marmara region and NAO index is show
 
 Marmara region is the independent variable and NAO index is the dependent variable in this linear model. 
 
-    The equation of the model is NAOindex= 7.4118 − 0.0015 ∗ Canakkale + 0.0015 ∗ Edirne − 0.007 ∗ Istanbul+0.0032∗Tekirdag+0.0063∗Y alova−0.0008∗ 20 Kßrklareli − 0.0019 ∗ Balßkesir − 0.0044 ∗ Bilecik − 0.0035 ∗ Bursa + 0.0014 ∗ Kocaeli − 0.0045 ∗ Sakarya.
+    The equation of the model is NAOindex= 7.4118 − 0.0015 ∗ Canakkale + 0.0015 ∗ 
+    Edirne − 0.007 ∗ Istanbul+0.0032∗Tekirdag+0.0063∗Y alova−0.0008∗ 20 Kßrklareli
+    − 0.0019 ∗ Balßkesir − 0.0044 ∗ Bilecik − 0.0035 ∗ Bursa + 0.0014 ∗ Kocaeli 
+    − 0.0045 ∗ Sakarya.
     
 In addition to the Marmara region, Karadeniz and Ege regions are chosen to examine and linear regression is applied between each provinces of these three regions and NAO indexes. Provinces with significant p-values are obtained since they will be compared principle component analysis results to understand that pattern on precipitation belongs to NAO or not. 
 
