@@ -14,13 +14,13 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
     5. Principle Component Analysis
     6. Conclusions
 
-*I will talk a little bit about meteorology since I mainly want to talk about the **R functions** to show how to achieve these statistical moethods.* So, if you want, you can find the whole document [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih%20Bozbura.pdf) The document was written using Copernicus **LaTeX** template. [#1]
+*I will talk a little bit about meteorology since I mainly want to talk about the **R functions** to show how to achieve these statistical moethods.* So, if you want, you can find the whole document [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih%20Bozbura.pdf) The document was written using Copernicus **LaTeX** template [#1].
 
 
 
 ##### **1.Introduction**
 
-The North Atlantic Oscillation (NAO) is a large-scale natural climate variability that has important impacts on the weather and climate of the North Atlantic region and surrounding continents, especially Europe. [#2]
+The North Atlantic Oscillation (NAO) is a large-scale natural climate variability that has important impacts on the weather and climate of the North Atlantic region and surrounding continents, especially Europe [#2].
 
 Strong positive phase of NAO is associated with lower than normal temperatures over southern Europe and the Middle East and it is related to *lower than normal precipitation* over southern and central Europe.Unlike strong positive phase of NAO , negative phase is related to higher than normal temperature over southern Europe and the Middle East and it is associated with *higher than normal precipitation* over southern and central Europe.
 
@@ -38,7 +38,7 @@ Firstly, exploratory data analysis are applied to understand fundamentals featur
 
  ##### **3.Exploratory Data Analysis**
 
-Exploratory data analysis is an approach to analyse a data. [#3] Hypothesis is determined as there is a relationship between precipitation and NAO for this study.
+Exploratory data analysis is an approach to analyse a data [#3]. Hypothesis is determined as there is a relationship between precipitation and NAO for this study.
 
 Firstly, the csv file was read and then Shapiro-Wilk normality test is applied the precipitation data. P-values of Marmara, Ege, Karad- eniz, Akdeniz, Ic Anadolu, Dogu Anadolu, and Guneydogu Anadolu regions are respectively 0.001137, 2.65e-15, 2.2e- 16, 1.884e-12, 3.409e-13, 2.2e-16, and 3.668e-06. So, the null hypothesis of Shapiro-Wilk normality test that is the samples come from a normal distribution is rejected.
 
@@ -63,7 +63,7 @@ Histogram of Marmara region has right skewed distribution. A few larger values b
 
 Before constructing the histogram we need to split the data into intervals called bins. For all regions the equation below was used for bin width. **h** is bin width, **c** is a constant in the range of 2.0 and 2.6 (2.6 is optimal for Gaussian data), **IQR** is interquartile range, and **n** is number of data.
 
-    h=(c*IQR)/(n^1/3)    
+    h=(c*IQR)/(n^1/3)   (Wilks, 2006, p.34)  
 
 ```r
 IQR_marmaraReg = IQR(as.numeric(unlist(marmaraReg))) #interquartile range
@@ -119,21 +119,33 @@ The **summary** of the linear model between Marmara region and NAO index is show
 Marmara region is the independent variable and NAO index is the dependent variable in this linear model. 
 
     The equation of the model is NAOindex= 7.4118 − 0.0015 ∗ Canakkale + 0.0015 ∗ 
-    Edirne − 0.007 ∗ Istanbul+0.0032∗Tekirdag+0.0063∗Y alova−0.0008∗ 20 Kßrklareli
-    − 0.0019 ∗ Balßkesir − 0.0044 ∗ Bilecik − 0.0035 ∗ Bursa + 0.0014 ∗ Kocaeli 
+    Edirne − 0.007 * Istanbul + 0.0032 * Tekirdag+0.0063 * Yalova−0.0008 * Kirklareli
+    − 0.0019 ∗ Balikesir − 0.0044 * Bilecik − 0.0035 * Bursa + 0.0014 * Kocaeli 
     − 0.0045 ∗ Sakarya.
     
 In addition to the Marmara region, Karadeniz and Ege regions are chosen to examine and linear regression is applied between each provinces of these three regions and NAO indexes. Provinces with significant p-values are obtained since they will be compared principle component analysis results to understand that pattern on precipitation belongs to NAO or not. 
 
-Provinces with significant p-values are **Balıkesir, Bilecik, Bursa, Canakkale, Edirne, Istanbul, Kocaeli, Sakarya, Tekirdag, Yalova, Kırklareli, Amasya,Kastamonu,Rize,Izmir,Kütahya,andManisa.**    
+Provinces with significant p-values are **Balikesir, Bilecik, Bursa, Canakkale, Edirne, Istanbul, Kocaeli, Sakarya, Tekirdag, Yalova, Kirklareli, Amasya, Kastamonu, Rize, Izmir, Kütahya, and Manisa.**    
 
 Residual is the difference between fitted and actual dependent point. Fitted point is a predicted point by the model. There should be no **discernible pattern** around zero. As it is seen below, residuals and fitted values are almost randomly distributed around the zero line. Therefore, the model is not very good, but it fits the data.
 
+
+
 ![resiualvsfitted](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Residual_Fitted.jpeg?raw=true)
 
-According to Normal Q-Q plot, residuals nearly folow the normal distribution.  
 
 ![Q-Q](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Normal_Q-Q.jpeg?raw=true)
+
+According to Normal Q-Q plot, residuals nearly folow the normal distribution. Also, in the Scale-Location plot, residuals are randomly distributed and there is no discernible pattern.
+
+![scale-loca](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scale_Location.jpeg?raw=true)
+
+Cook’s distance is used to find dominant points in independent variables. These points are far from the other points. In this case, 29th and 41st points are little away from the other points and 40th point are far from the other points as it is shown below. If the Cook’s distance is greater than 0.5, that point can be influencial, so it is worthy to examine [#4]. Cook’s distance of 40th point is greater than 0.5. If exceeding point equals about two times of average of data, it should be examined [#5]. 40th point is not greater or equal to the two times of average of data. So, it is not *worthy* for investigating.
+
+![Cooks](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Cooks.jpeg?raw=true)
+
+
+
 
 
 
@@ -148,6 +160,10 @@ According to Normal Q-Q plot, residuals nearly folow the normal distribution.
 [#1]: https://publications.copernicus.org/for_authors/latex_instructions.html
 
 [#3]: https://www.itl.nist.gov/div898/handbook/eda/section1/eda11.htm
+
+[#4]: https://onlinecourses.science.psu.edu/stat501/node/340
+
+[#5]: http://polisci.msu.edu/jacoby/icpsr/regress3/lectures/week3/11.Outliers.pdf
 
 **Wilks, D. S.** (2006). Statistical Methods in the Atmospheric Sciences (2nd ed., Vol. 91).
 
