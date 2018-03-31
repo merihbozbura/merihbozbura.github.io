@@ -49,16 +49,21 @@ P<-read.csv("Toplam_Yagis_Nao.csv",header = TRUE, sep=',') # Reads csv file
 
 PPrep<-P[,-1] # Remove first line which is header
 
-marmaraReg<-subset(PPrep, select = c("ckle","edir","ist","tkrd","yalv",
-"kirk","blke","blck","brsa","keli","skry")) # subsetting the provinces into regions
+marmaraReg<-subset(PPrep, select = c("ckle","edir","ist","tkrd","yalv","kirk"
+,"blke","blck","brsa","keli","skry")) # subsetting the provinces into regions
 
 shapiro.test(as.numeric(unlist(marmaraReg)))
 ```
-If you uses **View()** function, the read csv file is shown like in this ![image.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true)
 
-Histogram of Marmara region has right skewed distribution as it is stated in the ![image.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true) 
+If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true)
 
-A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.[#4]
+Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.[#4]
+
+![marmaraHist.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true) 
+
+Before constructing the histogram we need to split the data into intervals called bins. For all regions the equation below was used for bin width. **h** is bin width, **c** is a constant in the range of 2.0 and 2.6 (2.6 is optimal for Gaussian data), **IQR** is interquartile range, and **n** is number of data.
+
+    h=(c*IQR)/(n1/3)    
 
 ```r
 IQR_marmaraReg = IQR(as.numeric(unlist(marmaraReg))) #interquartile range
@@ -69,8 +74,29 @@ n_marmaraReg = nrow(marmaraReg)*ncol(marmaraReg)  # number of data
 bin_marmaraReg = (c*IQR_marmaraReg)/(n_marmaraReg^(1/3))
 min(marmaraReg)   ; max(marmaraReg)
 
-hist(as.numeric(unlist(marmaraReg)), main= "Annual Precipitation for Marmara Region 1970-2012", breaks = seq(min(marmaraReg),(max(marmaraReg)+bin_marmaraReg), by=bin_marmaraReg), col = "grey", xlab = "Annual Precipitation")
+hist(as.numeric(unlist(marmaraReg)), main= "Annual Precipitation for Marmara 
+Region 1970-2012", breaks = seq(min(marmaraReg),(max(marmaraReg)+bin_marmaraReg)
+, by=bin_marmaraReg), col = "grey", xlab = "Annual Precipitation")
+
+barplot(colMeans(as.matrix(PPrep[,1:81])), cex.names = .5,width = .835, xaxt = "n",col=rep(c("darkseagreen","coral1","thistle"),27), ylim = c(0,2800), main = 
+"Mean Precipitation between 1970 and 2012", xlab = "Provinces", ylab = "Precipitation")
+
+axis(1,at=1:81,tcl = -0.4)
+
+meanofprep= mean(colMeans(as.matrix(PPrep[,1:81])))
+
+abline(h=meanofprep , col="darkred")
 ```
+
+As it is seen from above, **IQR** function directly calculates interquartile range. So, bin width for Marmara Region is calculated and histogram is plotted with **hist**. The maximum value is reached by adding the bin width to the minimum value, so the intervals of the histogram was formed. 
+
+Also, a barplot was plotted with **barplot** to see is there any oddness in the data. For example, we know that Rize is the wettest province in Turkey and its annual precipitation is about 2000 mm. If Rize has 3000 mm precipitation in the barplot, we must suspect about the data whether it is accurate or not. Also, average value of Turkey's precipitation is drawn with **abline** on the barplot. ![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true)
+
+
+
+
+
+
 
 
 
