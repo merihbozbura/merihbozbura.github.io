@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A Great First Post
+title: The North Atlantic Oscillation Has an Effect on Western Turkey's Precipitation Pattern
 ---
 
 Hi!
