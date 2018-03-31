@@ -8,6 +8,6 @@ linkedin_username: merihb
 
 
 # Build settings
-plugins: jemoji
+#plugins: jemoji
 markdown: kramdown
 theme: minima
