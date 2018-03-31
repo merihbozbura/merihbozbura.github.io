@@ -18,7 +18,7 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
 
 
 
-##### **Introduction**
+##### ** 1.Introduction**
 
 The North Atlantic Oscillation (NAO) is a large-scale natural climate variability that has important impacts on the weather and climate of the North Atlantic region and surrounding continents, especially Europe. [#2]
 
@@ -28,7 +28,7 @@ Therefore, NAO is expected to have an impact on Turkey. Weather and climate cond
 
 
 
-##### **Data and Method**
+##### ** 2.Data and Method**
 
 Precipitation data is observation data and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
 
@@ -36,7 +36,7 @@ Firstly, exploratory data analysis are applied to understand fundamentals featur
 
 
 
- **Exploratory Data Analysis**
+ ##### ** 3.Exploratory Data Analysis**
 
 Exploratory data analysis is an approach to analyse a data. [#3] Hypothesis is determined as there is a relationship between precipitation and NAO for this study.
 
@@ -90,11 +90,47 @@ abline(h=meanofprep , col="darkred")
 
 As it is seen from above, **IQR** function directly calculates interquartile range. So, bin width for Marmara Region is calculated and histogram is plotted with **hist**. The maximum value is reached by adding the bin width to the minimum value, so the intervals of the histogram was formed. 
 
-Also, a barplot was plotted with **barplot** to see is there any oddness in the data. For example, we know that Rize is the wettest province in Turkey and its annual precipitation is about 2000 mm. If Rize has 3000 mm precipitation in the barplot, we must suspect about the data whether it is accurate or not. Also, average value of Turkey's precipitation is drawn with **abline** on the barplot. ![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true)
+Also, a barplot was plotted with **barplot** to see is there any oddness in the data. For example, we know that Rize is the wettest province in Turkey and its annual precipitation is about 2000 mm. If Rize has 3000 mm precipitation in the barplot, we must suspect about the data whether it is accurate or not. Also, average value of Turkey's precipitation is drawn with **abline** on the barplot.
+
+![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true)
 
 
+ ##### ** 4.Linear Regression**
+
+Turkey has seven regions and linear regression is applied between each region and NAO index with **lm** function. P-values of Marmara, Ege, Karadeniz, Akdeniz, Ic Anadolu, Dogu Anadolu, and Guneydogu Anadolu regions are respectively 0.003816, 0.1888, 0.05551, 0.4469, 0.7868, 0.9588, and 0.7791. Only, Marmara region rejects the null hypothesis which is there is no relationship between precipitation and NAO. However other regions do not reject the null hypothesis. With **plot(fit_marmaraReg,which=1:4)**, Residual vs Fitted, Normal Q-Q, Scale Location, and Cook’s distance were plotted.
 
 
+```r
+
+fit_marmaraReg <- lm(PPrep[,82]~., data = marmaraReg)
+
+summary(fit_marmaraReg)    
+
+plot(fit_marmaraReg,which=1:4)
+
+(colMeans(PPrep) - PPrep[41,] )== (2*colMeans(PPrep)) ### Rule of Thumb 
+
+```
+
+The **summary** of the linear model between Marmara region and NAO index is shown below.
+
+![summary](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/t.jpg?raw=true)
+
+Marmara region is the independent variable and NAO index is the dependent variable in this linear model. 
+
+    The equation of the model is NAOindex= 7.4118 − 0.0015 ∗ Canakkale + 0.0015 ∗ Edirne − 0.007 ∗ Istanbul+0.0032∗Tekirdag+0.0063∗Y alova−0.0008∗ 20 Kßrklareli − 0.0019 ∗ Balßkesir − 0.0044 ∗ Bilecik − 0.0035 ∗ Bursa + 0.0014 ∗ Kocaeli − 0.0045 ∗ Sakarya.
+    
+In addition to the Marmara region, Karadeniz and Ege regions are chosen to examine and linear regression is applied between each provinces of these three regions and NAO indexes. Provinces with significant p-values are obtained since they will be compared principle component analysis results to understand that pattern on precipitation belongs to NAO or not. 
+
+Provinces with significant p-values are **Balıkesir, Bilecik, Bursa, Canakkale, Edirne, Istanbul, Kocaeli, Sakarya, Tekirdag, Yalova, Kırklareli, Amasya,Kastamonu,Rize,Izmir,Kütahya,andManisa.**    
+
+Residual is the difference between fitted and actual dependent point. Fitted point is a predicted point by the model. There should be no **discernible pattern** around zero. As it is seen below, residuals and fitted values are almost randomly distributed around the zero line. Therefore, the model is not very good, but it fits the data.
+
+![resiualvsfitted](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Residual_Fitted.jpeg?raw=true)
+
+According to Normal Q-Q plot, residuals nearly folow the normal distribution.  
+
+![Q-Q](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Normal_Q-Q.jpeg?raw=true)
 
 
 
