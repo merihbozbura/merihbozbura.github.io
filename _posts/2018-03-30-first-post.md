@@ -3,14 +3,18 @@ layout: post
 title: The North Atlantic Oscillation Has an Effect on Western Turkey's Precipitation Pattern
 ---
 
-Hi!
-This is it!
-What a wonderful post!
+This is one of the subjects that I am curious about. So, I have shortly worked on it. You can use these statistical methods on any kind of data that you want to study. Outline of this case as follows:
 
+1. Introduction
+2. Data and Method
+3. Exploratory Data Analysis
+4. Linear Regression
+5. Principle Component Analysis
+6. Conclusions
 
-![Image of Avatar The Last Airbender](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/avatar-last-airbender.jpg?raw=true)
+*I will talk a little bit about meteorology since I mainly want to talk about the R functions to show how to achieve these statistical moethods.* So, if you want, you can find the whole document from this link.
 
-*Image: Nickelodeon*
+![Image of Avatar The Last Airbender]()
 
 
 
