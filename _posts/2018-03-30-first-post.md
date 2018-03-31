@@ -12,7 +12,7 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
 5. Principle Component Analysis
 6. Conclusions
 
-*I will talk a little bit about meteorology since I mainly want to talk about the R functions to show how to achieve these statistical moethods.* So, if you want, you can find the whole document from this link.
+*I will talk a little bit about meteorology since I mainly want to talk about the R functions to show how to achieve these statistical moethods.* So, if you want, you can find the whole document [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih%20Bozbura.pdf)
 
 ![Image of Avatar The Last Airbender]()
 
