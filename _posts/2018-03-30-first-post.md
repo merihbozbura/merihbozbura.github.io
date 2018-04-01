@@ -150,7 +150,7 @@ Cook’s distance is used to find dominant points in independent variables. Thes
 Principal Component Analysis(PCA) is the oldest and the most famous multivariate statistical technique (Abdi and Williams, 2010). The goal of principal components analysis is to clarify th emaximum amount of variance with less number of principal components. It is used for reducing dimension of very **big datasets** in addition to keep most of the information in the **big dataset**. R function of principle component analysis pulls the data normal distribution with centring and scale arguments. Before applying PCA, precipitation data was scaled and standardized since the scale between NAO indexes and precipitation is large. Marmara region, Karadeniz and Ege regions are chosen to examine. In PCA, a new coordinate system is placed on the dataset, this is shown below. 
 
 
-![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true)
+![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true){:height="50%" width="50%"}
 Source: (Swan and Sandilands, 1995, p.446)
 
 
