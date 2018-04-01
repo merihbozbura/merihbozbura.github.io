@@ -192,12 +192,12 @@ Also, there is another method to determine the number of principal components wh
 function was used as it seen from the code.
 
 
-![scree](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scree_Stand.jpeg?raw=true)
+![scree](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scree_Stand.jpeg?raw=true){:height="40%" width="40%"}
 
 The distribution of the data points(rotation of original data points) in this new coordinate system is represented with **biplot** using scores(positions) and loadings(rotations). Biplot pops up in the screen like new window instead of appearing in R Studio's plot section with **dev.new** function and biplot is plotted with **biplot** function.
 
 
-![biplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Stan_Biplot.jpeg?raw=true)
+![biplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Stan_Biplot.jpeg?raw=true){:height="50%" width="50%"}
  
 *According to biplot above*, Istanbul, Balikesir, Kirklareli, Manisa, Kastamonu, Canakkale are near each other and Bursa, Tekirdag, Gumushane, Yalova, Sakarya, and Izmir are near each other and Amasya, Bilecik, Kutahya, Bolu are near each other and Edirne, Kocaeli, and Rize are near each other. **These provinces are the provinces with significant p-values.** 
 
