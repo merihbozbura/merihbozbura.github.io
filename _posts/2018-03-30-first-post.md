@@ -12,7 +12,7 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
     3. Exploratory Data Analysis
     4. Linear Regression
     5. Principle Component Analysis
-    6. Conclusion
+    6. Conclusions
 
 *I will talk a little bit about meteorology since I mainly want to talk about the **R functions** to show how to achieve these statistical moethods.* So, if you want, you can find the whole document [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih%20Bozbura.pdf) The document was written using Copernicus **LaTeX** template [#1].
 
@@ -213,7 +213,7 @@ In this PC Analysis, Kutahya, Manisa, Izmir, Edirne, Kirklareli are near each ot
 Also, Bartin, Zongudak, Karabuk, Gumushane, Tokat, Sinop, Trabzon, Giresun, Artvin, Samsun, Bayburt, and Ordu are near each other and Duzce, Afyon, Aydın are near each other and **these provinces are not the provinces with significant p-values.** Kütahya, Manisa, Izmir,Edirne, Kırklareli are near each other, so they can be used **interchangeably.**
 
 
-##### **6.Conclusion**
+#### **6.Conclusions**
 
 * Exploratory data analysis is applied to understand the datasets and linear regression analysis is applied to find out whether there is a relationship or not between precipitation and NAO index datasets. 
 
