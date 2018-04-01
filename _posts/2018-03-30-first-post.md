@@ -18,7 +18,7 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
 
 
 
-##### **1.Introduction**
+#### **1.Introduction**
 
 The North Atlantic Oscillation (NAO) is a large-scale natural climate variability that has important impacts on the weather and climate of the North Atlantic region and surrounding continents, especially Europe [#2].
 
@@ -28,15 +28,15 @@ Therefore, NAO is expected to have an impact on Turkey. Weather and climate cond
 
 
 
-##### **2.Data and Method**
+#### **2.Data and Method**
 
-Precipitation data is observation data and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
+Precipitation data is annual observation data in millimeters(mm) and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
 
 Firstly, exploratory data analysis are applied to understand fundamentals features of precipitation data. Secondly, linear regression is applied to see whether there is a relationship between NAO and precipitation or not. Finally, principle component analysis is applied to understand effect of NAO on precipitation. 
 
 
 
-##### **3.Exploratory Data Analysis**
+#### **3.Exploratory Data Analysis**
 
 Exploratory data analysis is an approach to analyse a data [#3]. Hypothesis is determined as there is a relationship between precipitation and NAO for this study.
 
@@ -95,7 +95,7 @@ Also, a barplot was plotted with **barplot** to see is there any oddness in the 
 ![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true)
 
 
-##### **4.Linear Regression**
+#### **4.Linear Regression**
 
 Turkey has seven regions and linear regression is applied between each region and NAO index with **lm** function. P-values of Marmara, Ege, Karadeniz, Akdeniz, Ic Anadolu, Dogu Anadolu, and Guneydogu Anadolu regions are respectively 0.003816, 0.1888, 0.05551, 0.4469, 0.7868, 0.9588, and 0.7791. Only, Marmara region rejects the null hypothesis which is there is no relationship between precipitation and NAO. However other regions do not reject the null hypothesis. With **plot(fit_marmaraReg,which=1:4)**, Residual vs Fitted, Normal Q-Q, Scale Location, and Cook’s distance were plotted.
 
@@ -145,7 +145,7 @@ Cook’s distance is used to find dominant points in independent variables. Thes
 ![Cooks](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Cooks.jpeg?raw=true)
 
 
-##### **5.Principle Component Analysis**
+#### **5.Principle Component Analysis**
 
 Principal Component Analysis(PCA) is the oldest and the most famous multivariate statistical technique (Abdi and Williams, 2010). The goal of principal components analysis is to clarify th emaximum amount of variance with less number of principal components. It is used for reducing dimension of very **big datasets** in addition to keep most of the information in the **big dataset**. R function of principle component analysis pulls the data normal distribution with centring and scale arguments. Before applying PCA, precipitation data was scaled and standardized since the scale between NAO indexes and precipitation is large. Marmara region, Karadeniz and Ege regions are chosen to examine. In PCA, a new coordinate system is placed on the dataset, this is shown below. 
 
@@ -222,7 +222,12 @@ Also, Bartin, Zongudak, Karabuk, Gumushane, Tokat, Sinop, Trabzon, Giresun, Artv
 * Principle component analysis are applied to three region which contains *thirty six* provinces. As it is seen in section 4 and section 5, the provinces with **significant p-values** and **grouped provinces** that are obtained from **principle component analysis** are nearly same except few provinces. Also, Marmara region has significant p-value. In the light of these informations, **precipitation is affected by North Atlantic Oscillation can be said.**
 
 
-#### **References**
+If you want to see position of provinces, you can check it out [here.](http://cografyaharita.com/haritalarim/4lturkiye-mulki-idare-sistemleri-haritasi1.png)
+
+
+
+
+### **References**
 
 [#2]: https://www.ncdc.noaa.gov/teleconnections/nao/
 
