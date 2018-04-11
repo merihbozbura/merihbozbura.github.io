@@ -55,11 +55,11 @@ marmaraReg<-subset(PPrep, select = c("ckle","edir","ist","tkrd","yalv","kirk"
 shapiro.test(as.numeric(unlist(marmaraReg)))
 ```
 
-If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="50%" width="50%"}
+If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="60%" width="60%"}
 
 Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.
 
-![marmaraHist.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true){:height="60%" width="60%"}
+![marmaraHist.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true){:height="80%" width="80%"}
 
 Before constructing the histogram we need to split the data into intervals called bins. For all regions the equation below was used for bin width. **h** is bin width, **c** is a constant in the range of 2.0 and 2.6 (2.6 is optimal for Gaussian data), **IQR** is interquartile range, and **n** is number of data.
 
@@ -92,7 +92,7 @@ As it is seen from above, **IQR** function directly calculates interquartile ran
 
 Also, a barplot was plotted with **barplot** to see is there any oddness in the data. For example, we know that Rize is the wettest province in Turkey and its annual precipitation is about 2000 mm. If Rize has 3000 mm precipitation in the barplot, we must suspect about the data whether it is accurate or not. Also, average value of Turkey's precipitation is drawn with **abline** on the barplot.
 
-![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true){:height="60%" width="60%"}
+![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true){:height="80%" width="80%"}
 
 
 #### **4.Linear Regression**
@@ -114,7 +114,7 @@ plot(fit_marmaraReg,which=1:4)
 
 The **summary** of the linear model between Marmara region and NAO index is shown below.
 
-![summary](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/t.jpg?raw=true){:height="60%" width="60%"}
+![summary](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/t.jpg?raw=true){:height="80%" width="80%"}
 
 Marmara region is the independent variable and NAO index is the dependent variable in this linear model. 
 
@@ -131,18 +131,18 @@ Residual is the difference between fitted and actual dependent point. Fitted poi
 
 
 
-![resiualvsfitted](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Residual_Fitted.jpeg?raw=true){:height="60%" width="60%"}
+![resiualvsfitted](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Residual_Fitted.jpeg?raw=true){:height="80%" width="80%"}
 
 
-![Q-Q](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Normal_Q-Q.jpeg?raw=true){:height="60%" width="60%"}
+![Q-Q](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Normal_Q-Q.jpeg?raw=true){:height="80%" width="80%"}
 
 According to Normal Q-Q plot, residuals nearly folow the normal distribution. Also, in the Scale-Location plot, residuals are randomly distributed and there is no discernible pattern.
 
-![scale-loca](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scale_Location.jpeg?raw=true){:height="60%" width="60%"}
+![scale-loca](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scale_Location.jpeg?raw=true){:height="80%" width="80%"}
 
 Cook’s distance is used to find dominant points in independent variables. These points are far from the other points. In this case, 29th and 41st points are little away from the other points and 40th point are far from the other points as it is shown below. If the Cook’s distance is greater than 0.5, that point can be influencial, so it is worthy to examine [#4]. Cook’s distance of 40th point is greater than 0.5. If exceeding point equals about two times of average of data, it should be examined [#5]. 40th point is not greater or equal to the two times of average of data. So, it is not *worthy* for investigating.
 
-![Cooks](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Cooks.jpeg?raw=true){:height="60%" width="60%"}
+![Cooks](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Cooks.jpeg?raw=true){:height="80%" width="80%"}
 
 
 #### **5.Principle Component Analysis**
@@ -150,7 +150,7 @@ Cook’s distance is used to find dominant points in independent variables. Thes
 Principal Component Analysis(PCA) is the oldest and the most famous multivariate statistical technique (Abdi and Williams, 2010). The goal of principal components analysis is to clarify th emaximum amount of variance with less number of principal components. It is used for reducing dimension of very **big datasets** in addition to keep most of the information in the **big dataset**. R function of principle component analysis pulls the data normal distribution with centring and scale arguments. Before applying PCA, precipitation data was scaled and standardized since the scale between NAO indexes and precipitation is large. Marmara region, Karadeniz and Ege regions are chosen to examine. In PCA, a new coordinate system is placed on the dataset, this is shown below. 
 
 
-![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true){:height="60%" width="60%"}
+![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true){:height="80%" width="80%"}
 Source: (Swan and Sandilands, 1995, p.446)
 
 
@@ -161,7 +161,7 @@ As it is mentioned above, *center* substracts the mean from each data point and 
 
 The *eigenvalues* are the amount of variation along new axes kept by each PC. *Loadings* are the correlations between the variables and PCs. *Scores* are the positions of each data point in this new coordinate system. After obtainig eigenvalues, the variances is turned to percentage to plot. You can see summation of percent variances reach 100 % with cumulative summation **(cumsum)** function. **Percent variances** was plotted with *barplot* function with a red horizontal line on it as it is seen below. This horizontal red line is that if each variable devoted equally, they would devote 2.8% to the total variance since there are thirty six variables(number of provinces). **Fisrt fourteen** PCs represent 77.37% of the data. 
 
-![percent](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Percent_Stand.jpeg?raw=true){:height="60%" width="60%"}
+![percent](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Percent_Stand.jpeg?raw=true){:height="80%" width="80%"}
 
 ```r
 pca <- prcomp(mar_kar_ege_s, center = TRUE, scale. = TRUE)
@@ -192,12 +192,12 @@ Also, there is another method to determine the number of principal components wh
 function was used as it seen from the code.
 
 
-![scree](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scree_Stand.jpeg?raw=true){:height="60%" width="60%"}
+![scree](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scree_Stand.jpeg?raw=true){:height="80%" width="80%"}
 
 The distribution of the data points(rotation of original data points) in this new coordinate system is represented with **biplot** using scores(positions) and loadings(rotations). Biplot pops up in the screen like new window instead of appearing in R Studio's plot section with **dev.new** function and biplot is plotted with **biplot** function.
 
 
-![biplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Stan_Biplot.jpeg?raw=true){:height="60%" width="60%"}
+![biplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Stan_Biplot.jpeg?raw=true){:height="80%" width="80%"}
  
 *According to biplot above*, Istanbul, Balikesir, Kirklareli, Manisa, Kastamonu, Canakkale are near each other and Bursa, Tekirdag, Gumushane, Yalova, Sakarya, and Izmir are near each other and Amasya, Bilecik, Kutahya, Bolu are near each other and Edirne, Kocaeli, and Rize are near each other. **These provinces are the provinces with significant p-values.** 
 
