@@ -1,0 +1,591 @@
+
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
+
+
+
+;;;;;; CSV Read 
+
+begin
+  filename = "/Users/merihbozbura/Documents/Lectures/Data_Visualization/NCL_Project/Yagis1970-2012.csv"
+
+;---Read in file as array of strings so we can parse each line
+  lines  = asciiread(filename,-1,"string") ; -1 is given for the dimensions parameter, all values in the file will be read into a one-dimensional variable.
+  nlines = dimsizes(lines)-1   ; First line is a header
+  ;---This file has quotes around everything, which we don't want.
+  dq    = str_get_dq() ;Returns the double quote (") character as a string.
+  lines = str_sub_str(lines,dq,"")   ; Replace quotes with empty string
+
+;---First line is name of each field
+  delim       = ","
+  field_names = str_split(lines(0),delim) ; Splits a string into an array of strings given one or more delimiters, names of provinces
+  nfields     = dimsizes(field_names)
+
+;---We're going to read the whole file as a 2D array of strings
+  fields = new((/nfields,nlines/),string)
+
+;---Remember that fields start at 1, not 0.
+  do nf=0,nfields-1
+    fields(nf,:) = str_get_field(lines(1:),nf+1,delim) ;Returns an array of substrings given a field number and a combination of delimiters.
+
+
+  end do
+
+;---Print the information
+  do nl=0,nlines-1
+    print("======================")
+    print("Line #" + (nl+1))
+    do nf=0,nfields-1
+      print(field_names(nf) + " is " + fields(nf,nl))
+    end do
+  end do
+  print("======================")
+end
+
+
+
+;;;;;;Extracting Data
+   data = transpose(fields)  ; fields(col,row) ---> data(row,col)
+
+   prep = stringtofloat(data(:,1:81))  ; When reading the csv file, it was read as string.
+
+   a = ispan(1,81,1)
+   provinces = onedtond(a,(/1,81/))
+
+   ave = dim_avg_n(prep,0)  ; Average precipitation
+   total_prep_ave = onedtond(ave,(/1,81/))
+
+
+
+  ;;;;;; Provinces of Turkey
+   Year = stringtofloat(data(:,0))
+   afyon = stringtofloat(data(:,3))
+   amasya = stringtofloat(data(:,5))
+   artvin = stringtofloat(data(:,8))
+   aydin = stringtofloat(data(:,9))
+   balikesir = stringtofloat(data(:,10))
+   bilecik = stringtofloat(data(:,11))
+   bolu = stringtofloat(data(:,14))
+   bursa = stringtofloat(data(:,16))
+   canakkale = stringtofloat(data(:,17))
+   denizli = stringtofloat(data(:,20))
+   edirne = stringtofloat(data(:,22))
+   giresun = stringtofloat(data(:,28))
+   gumushane = stringtofloat(data(:,29))
+   istanbul = stringtofloat(data(:,34))
+   izmir = stringtofloat(data(:,35))
+   kastamonu = stringtofloat(data(:,37))
+   kirklareli = stringtofloat(data(:,39))
+   kocaeli = stringtofloat(data(:,41))
+   kutahya = stringtofloat(data(:,43))
+   manisa = stringtofloat(data(:,45))
+   mugla = stringtofloat(data(:,48))
+   ordu = stringtofloat(data(:,52))
+   rize = stringtofloat(data(:,53))
+   sakarya = stringtofloat(data(:,54))
+   samsun = stringtofloat(data(:,55))
+   sinop = stringtofloat(data(:,57))
+   tekirdag = stringtofloat(data(:,59))
+   tokat = stringtofloat(data(:,60))
+   trabzon = stringtofloat(data(:,61))
+   usak = stringtofloat(data(:,64))
+   zonguldak = stringtofloat(data(:,67))
+   bayburt = stringtofloat(data(:,69))
+   bartin = stringtofloat(data(:,74))
+   yalova = stringtofloat(data(:,77))
+   karabuk = stringtofloat(data(:,78))
+   duzce = stringtofloat(data(:,81))
+   Nao = stringtofloat(data(:,82))
+
+
+;;;;;; Bar Plot
+
+    wks = gsn_open_wks("png","Barplot")
+    res = True
+    res@gsnXYBarChart = True ; Barchart
+    res@vpWidthF              = 1
+    res@vpHeightF             = 0.65
+    res@gsnMaximize = True             ; Maximize plot in frame.
+    res@gsnXYBarChartBarWidth = 1
+    res@trYMinF = 271.37
+    res@gsnXYBarChartColors = (/"firebrick","red","orange","green","navy","blue","SkyBlue","SlateBlue"/)
+    res@tmXTOn = False ; close top tick marks
+    res@tmYROn = False ; close right tick marks
+    res@tmXBMode = "Explicit" ; define your own tick marks
+    res@tmXBLabelFont = 25          ; Change font of labels.
+    res@tmXBLabelFontHeightF = 0.015 ; change font height of labels
+    res@tmXBMinorOn   = True      ; No minor tick marks.
+    res@tmLabelAutoStride =True ; nice stride on labels labels dont overlap
+    res@trXMinF = 1        ; set minimum X-axis value
+    res@tmXBTickStartF  = res@trXMinF   ; Force tickmark labelling to start at first value
+    res@tmXBValues = ispan (1,81,1) ; Location to put tick mark labels
+    res@tmXBLabels = ispan (1,81,1) ; Labels of these locations
+    res@gsnDraw             = False         ; don't draw yet
+    res@gsnFrame            = False
+    res@tiMainString         = "Mean Precipitation between 1970 and 2012"
+    res@tiXAxisString        = "Provinces"
+    res@tiYAxisString        = "Precipitation (mm)"
+    res@tiMainFontHeightF    = 0.028
+    res@tiXAxisFontHeightF   = 0.018
+    res@tiYAxisFontHeightF   = 0.018
+
+    resa = True
+    resa@xyLineThicknesses = 6
+    resa@xyLineColors = (/"red"/)
+
+    Barplot = gsn_csm_xy(wks,provinces,total_prep_ave,res)
+
+    yy = (/638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931/)
+    xy= (/638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931,638.3931/)
+    y1= array_append_record(yy,yy,0)
+    y2=array_append_record(y1,y1,0)
+    y3=array_append_record(y2,xy,0)
+    aveprep = gsn_csm_y(wks,y3,resa)
+    overlay(Barplot,aveprep)
+    draw(Barplot)
+    frame(wks)
+
+
+
+  ;;;;;; Histograms
+   marmara = stringtofloat(data(:,(/10,11,16,17,22,34,41,54,59,77,39/)))
+   ege = stringtofloat(data(:,(/3,9,20,35,43,45,48,64/)))
+   karadeniz =stringtofloat(data(:,(/5,8,74,69,4,81,28,29,78,37,52,53,55,57,60,61,67/)))
+
+   Turkey_prep = ndtooned(prep)
+   marmara_prep = ndtooned(marmara)
+   ege_prep = ndtooned(ege)
+   karadeniz_prep = ndtooned(karadeniz)
+
+
+  ;;----Turkey
+
+
+   wks1 = gsn_open_wks("png","Hist_Turkey")
+   res1 = True
+   res1@vpWidthF              = 1
+   res1@vpHeightF             = 0.65
+   res1@gsnMaximize = True             ; Maximize plot in frame.
+   res1@tmXTOn = False ; close top tick marks
+   res1@tmYROn = False ; close right tick marks
+   res1@tmXBTickStartF  = 145   ; Force tickmark labelling to start at first value
+   res1@gsnHistogramSelectNiceIntervals= False
+   res1@gsnHistogramBinIntervals = (/146.2000 , 205.3731 , 264.5463 , 323.7194 , 382.8925 , 442.0657 , 501.2388,560.4119 , 619.5851 , 678.7582 , 737.9313 , 797.1045 , 856.2776 , 915.4508,974.6239,1033.7970,1092.9702,1152.1433,1211.3164,1270.4896,1329.6627,1388.8358,1448.0090,1507.1821,1566.3552,1625.5284,1684.7015,1743.8746,1803.0478,1862.2209,1921.3940,1980.5672,2039.7403,2098.9135,2158.0866,2217.2597,2276.4329,2335.6060,2394.7791,2453.9523,2513.1254,2572.2985,2631.4717,2690.6448,2713.9/)
+   res1@tmXBLabelFont = 25          ; Change font of labels.
+   res1@tmXBLabelFontHeightF = 0.015 ; change font height of labels
+   res1@tmXBMinorOn   = True      ; No minor tick marks.
+   res1@tmLabelAutoStride =True ; nice stride on labels labels dont overlap
+   res1@tiMainString         = "Annual Precipitation for Turkey 1970 and 2012"
+   res1@tiXAxisString        = "Annual Precipitation (mm)"
+   res1@tiYAxisString        = "Frequency"
+   res1@tiMainFontHeightF    = 0.028
+   res1@tiXAxisFontHeightF   = 0.018
+   res1@tiYAxisFontHeightF   = 0.018
+
+   Hist_Turkey = gsn_histogram(wks1,Turkey_prep,res1)
+
+
+
+  ;;----Marmara Region
+
+   wks2 = gsn_open_wks("png","Hist_Marmara")
+   res2 = True
+   res2@vpWidthF              = 1
+   res2@vpHeightF             = 0.65
+   res2@gsnMaximize = True             ; Maximize plot in frame.
+   res2@tmXTOn = False ; close top tick marks
+   res2@tmYROn = False ; close right tick marks
+   res2@tmXBTickStartF  = 284   ; Force tickmark labelling to start at first value
+   res2@gsnHistogramSelectNiceIntervals= False
+   res2@gsnHistogramBinIntervals = (/ 285.0000  ,368.5579 , 452.1157 , 535.6736  ,619.2314 , 702.7893  ,786.3471,869.9050 , 953.4629 ,1037.0207, 1120.5786 ,1204.1364 ,1260.7/)
+   res2@tmXBLabelFont = 25          ; Change font of labels.
+   res2@tmXBLabelFontHeightF = 0.015 ; change font height of labels
+   res2@tmXBMinorOn   = True      ; No minor tick marks.
+   res2@tmLabelAutoStride =True ; nice stride on labels labels dont overlap
+   res2@tiMainString         = "Annual Precipitation for Marmara Region 1970 and 2012"
+   res2@tiXAxisString        = "Annual Precipitation (mm)"
+   res2@tiYAxisString        = "Frequency"
+   res2@tiMainFontHeightF    = 0.028
+   res2@tiXAxisFontHeightF   = 0.018
+   res2@tiYAxisFontHeightF   = 0.018
+
+   Hist_Marmara = gsn_histogram(wks2,marmara_prep,res2)
+
+
+  ;;----Ege Region
+
+
+   wks3 = gsn_open_wks("png","Hist_Ege")
+   res3 = True
+   res3@vpWidthF              = 1
+   res3@vpHeightF             = 0.65
+   res3@gsnMaximize = True             ; Maximize plot in frame.
+   res3@tmXTOn = False ; close top tick marks
+   res3@tmYROn = False ; close right tick marks
+   res3@tmXBTickStartF  = 282   ; Force tickmark labelling to start at first value
+   res3@gsnHistogramSelectNiceIntervals= False
+   res3@gsnHistogramBinIntervals = (/283.1357, 385.5915, 488.0473 ,590.5031, 692.9589 , 795.4147 , 897.8705,1000.3263 ,1102.7821, 1205.2379 ,1307.6937 ,1410.1495, 1512.6053 ,1615.0611 ,1717.5169/)
+   res3@tmXBLabelFont = 25          ; Change font of labels.
+   res3@tmXBLabelFontHeightF = 0.015 ; change font height of labels
+   res3@tmXBMinorOn   = True      ; No minor tick marks.
+   res3@tmLabelAutoStride =True ; nice stride on labels labels dont overlap
+   res3@tiMainString         = "Annual Precipitation for Ege Region 1970 and 2012"
+   res3@tiXAxisString        = "Annual Precipitation (mm)"
+   res3@tiYAxisString        = "Frequency"
+   res3@tiMainFontHeightF    = 0.028
+   res3@tiXAxisFontHeightF   = 0.018
+   res3@tiYAxisFontHeightF   = 0.018
+
+   Hist_Ege = gsn_histogram(wks3,ege_prep,res3)
+
+
+
+;;----Karadeniz region
+
+   wks4 = gsn_open_wks("png","Hist_Karadeniz")
+   res4 = True
+   res4@vpWidthF              = 1
+   res4@vpHeightF             = 0.65
+   res4@gsnMaximize = True             ; Maximize plot in frame.
+   res4@tmXTOn = False ; close top tick marks
+   res4@tmYROn = False ; close right tick marks
+   res4@tmXBTickStartF  = 252   ; Force tickmark labelling to start at first value
+   res4@gsnHistogramSelectNiceIntervals= False
+   res4@gsnHistogramBinIntervals = (/ 253.7000 , 398.3589 , 543.0179 , 687.6768 , 832.3358  , 976.9947 , 1121.6537,1266.3126 ,1410.9715, 1555.6305 ,1700.2894 ,1844.9484 ,1989.6073 ,2134.2662,2278.9252 ,2423.5841, 2568.2431, 2712.9020, 2713.9/)
+   res4@tmXBLabelFont = 25          ; Change font of labels.
+   res4@tmXBLabelFontHeightF = 0.015 ; change font height of labels
+   res4@tmXBMinorOn   = True      ; No minor tick marks.
+   res4@tmLabelAutoStride =True ; nice stride on labels labels dont overlap
+   res4@tiMainString         = "Annual Precipitation for Karadeniz Region 1970 and 2012"
+   res4@tiXAxisString        = "Annual Precipitation (mm)"
+   res4@tiYAxisString        = "Frequency"
+   res4@tiMainFontHeightF    = 0.028
+   res4@tiXAxisFontHeightF   = 0.018
+   res4@tiYAxisFontHeightF   = 0.018
+
+   Hist_Karadeniz = gsn_histogram(wks4,karadeniz_prep,res4)
+
+
+
+  ;;;;;; Regression
+
+  ;;----Regions
+   opt = True
+   opt@print_anova = True ;will print the ANOVA table
+   opt@print_data  = True ; will print the input data in table form
+
+
+   reg_marmara   =  reg_multlin_stats(Nao,marmara,opt) ; partial regression coef
+   print(reg_marmara)
+
+   reg_ege   =  reg_multlin_stats(Nao,ege,opt) ; partial regression coef
+   print(reg_ege)
+
+   reg_karadeniz   =  reg_multlin_stats(Nao,karadeniz,opt) ; partial regression coef
+   print(reg_karadeniz)
+
+  ;;----Residual_Fitted
+
+   wks5 = gsn_open_wks("png","Residual_Fitted")
+
+   Fitted_Nao = (7.98642 - 0.001584583*balikesir - 0.004196721*bilecik - 0.003053695*bursa - 0.001753206*canakkale - 0.00451112*edirne - 0.007670015*istanbul - 0.00273433*kocaeli - 0.0005422276*sakarya + 0.00214023*tekirdag + 0.008831669*yalova + 0.002830141*kirklareli)
+   residuals = Nao - Fitted_Nao ; error
+
+   regres=True
+   regres@gsnMaximize       = True                     ; maximize plot
+   regres@tiMainString      = "Residual vs Fitted"           ; add title
+   regres@xyMarkLineMode    = "Markers"                ; choose to use markers
+   regres@xyMarkers         =  16                      ; choose type of marker
+   regres@xyMarkerColor     = "NavyBlue"               ; Marker color
+   regres@xyMarkerSizeF     = 0.01                     ; Marker size (default 0.01)
+   regres@tiXAxisString        = "Fitted"
+   regres@tiYAxisString        = "Residuals"
+   regres@tiMainFontHeightF    = 0.028
+   regres@tiXAxisFontHeightF   = 0.018
+   regres@tiYAxisFontHeightF   = 0.018
+   regres@gsnYRefLine = 0
+   regres@gsnYRefLineColor = (/"red"/)
+   regres@gsnYRefLineDashPattern = 1
+   regres@gsnYRefLineThicknessF=4
+
+   resvsfit  = gsn_csm_xy (wks5,Fitted_Nao,residuals,regres)
+
+
+
+  ;;----Scale_Location
+
+   wks6 = gsn_open_wks("png","Scale_Location")
+
+   regres2 = True
+   regres2@gsnMaximize       = True                     ; maximize plot
+   regres2@tiMainString      = "Scale-Location"           ; add title
+   regres2@tiYAxisString        = "Square Roof of Standardized Residuals"
+   regres2@xyMarkLineMode    = "Markers"                ; choose to use markers
+   regres2@xyMarkers         =  16                      ; choose type of marker
+   regres2@xyMarkerColor     = "NavyBlue"               ; Marker color
+   regres2@xyMarkerSizeF     = 0.01                     ; Marker size (default 0.01)
+   regres2@tiXAxisString        = "Fitted"
+   regres2@tiMainFontHeightF    = 0.028
+   regres2@tiXAxisFontHeightF   = 0.018
+   regres2@tiYAxisFontHeightF   = 0.018
+   regres2@trXMinF=-3.1
+   regres2@trYMinF=0
+   regres2@trYMaxF=1.6
+
+
+  residual_ave = avg(residuals)
+  resi_std = stddev(residuals)
+  residual_stdised = ((residuals)-(residual_ave))/ resi_std
+  rootofresiduals_std = sqrt(abs(residual_stdised))
+  scalelocation = gsn_csm_xy(wks6,Fitted_Nao,rootofresiduals_std,regres2)
+
+
+  ;;----Normal QQ Plot
+
+  wks7 = gsn_open_wks("png","Normal_Q-Q")
+
+  regresqq = True
+  regresqq@gsnMaximize       = True                     ; maximize plot
+  regresqq@tiMainString      = "Normal Q-Q"           ; add title
+  regresqq@tiYAxisString        = "Standardized Residuals"
+  regresqq@xyMarkLineMode    = "Markers"                ; choose to use markers
+  regresqq@xyMarkers         =  16                      ; choose type of marker
+  regresqq@xyMarkerColor     = "NavyBlue"               ; Marker color
+  regresqq@xyMarkerSizeF     = 0.01                     ; Marker size (default 0.01)
+  regresqq@tiXAxisString        = "Fitted"
+  regresqq@tiMainFontHeightF    = 0.028
+  regresqq@tiXAxisFontHeightF   = 0.018
+  regresqq@tiYAxisFontHeightF   = 0.018
+  regresqq@tiXAxisString        = "Theoretical Quantiles"
+  regresqq@trYMinF=-2
+  regresqq@trYMaxF=2
+  regresqq@trXMinF=-3.3
+  regresqq@trXMaxF=3.3
+
+
+qsort(residual_stdised)
+the_quantiles = fspan(-3,3,43)
+
+scalelocation = gsn_csm_xy(wks7,the_quantiles,residual_stdised,regresqq)
+
+
+ ;;----Cook's Distance
+
+  wks8 = gsn_open_wks("png","Cooks")
+
+  regresqqq = True
+  regresqqq@gsnXYBarChart = True ; Barchart
+  regresqqq@gsnMaximize       = True                     ; maximize plot
+  regresqqq@tiMainString      = "Cook's Distance"           ; add title
+  regresqqq@tiYAxisString        = "Cook's Distance"
+  regresqqq@gsnXYBarChartBarWidth = 0.5
+  regresqqq@gsnXYBarChartColors = (/"firebrick","red","orange","green","navy","blue","SkyBlue","SlateBlue"/)
+  regresqqq@tmXTOn = False ; close top tick marks
+  regresqqq@tmYROn = False ; close right tick marks
+  regresqqq@tiXAxisString        = "Observation Number"
+  regresqqq@tiMainFontHeightF    = 0.028
+  regresqqq@tiXAxisFontHeightF   = 0.018
+  regresqqq@tiYAxisFontHeightF   = 0.018
+
+
+avgNao = avg(Nao)
+
+hi = ((1/42.)*((Nao-avgNao)/stddev(Nao))^2)+(1/43.)
+estimated_variance = 3.003255
+studres= residuals/(estimated_variance*(sqrt(1-hi)))
+
+Cooks_distance = (1/12.)*(studres^2)*(hi/(1-hi))
+obs_number = ispan(0,42,1)
+
+cook= gsn_csm_xy(wks8,obs_number,Cooks_distance,regresqqq)
+
+thumb = where(Nao(40).ge.(2*avgNao),1,0) ; 1 and 0 represents return value. 1 = True, 0=False
+
+
+
+  ;;----Provinces
+
+  Reg__afyon     = regline_stats(Nao,afyon    )
+  Reg__amasya    = regline_stats(Nao,amasya   )  ; significant p_value
+  Reg__artvin    = regline_stats(Nao,artvin   )
+  Reg__aydin     = regline_stats(Nao,aydin    )
+  Reg__balikesir = regline_stats(Nao,balikesir )  ; significant p_value
+  Reg__bilecik   = regline_stats(Nao,bilecik   )  ; significant p_value
+  Reg__bolu      = regline_stats(Nao,bolu      )  ; significant p_value
+  Reg__bursa     = regline_stats(Nao,bursa     ) ; significant p_value
+  Reg__canakkale = regline_stats(Nao,canakkale )    ; significant p_value
+  Reg__denizli   = regline_stats(Nao,denizli   )
+  Reg__edirne    = regline_stats(Nao,edirne    )   ; significant p_value
+  Reg__giresun   = regline_stats(Nao,giresun   )
+  Reg__gumushane = regline_stats(Nao,gumushane )
+  Reg__istanbul  = regline_stats(Nao,istanbul  )  ; significant p_value
+  Reg__izmir     = regline_stats(Nao,izmir     )  ; significant p_value
+  Reg__kastamonu = regline_stats(Nao,kastamonu ) ; significant p_value
+  Reg__kirklareli= regline_stats(Nao,kirklareli) ; significant p_value
+  Reg__kocaeli   = regline_stats(Nao,kocaeli   )  ; significant p_value
+  Reg__kutahya   = regline_stats(Nao,kutahya   )  ; significant p_value
+  Reg__manisa    = regline_stats(Nao,manisa    )  ; significant p_value
+  Reg__mugla     = regline_stats(Nao,mugla     )
+  Reg__ordu      = regline_stats(Nao,ordu      )
+  Reg__rize      = regline_stats(Nao,rize      )  ; significant p_value
+  Reg__sakarya   = regline_stats(Nao,sakarya   )
+  Reg__samsun    = regline_stats(Nao,samsun    )
+  Reg__sinop     = regline_stats(Nao,sinop     )
+  Reg__tekirdag  = regline_stats(Nao,tekirdag  )  ; significant p_value
+  Reg__tokat     = regline_stats(Nao,tokat     )
+  Reg__trabzon   = regline_stats(Nao,trabzon   )
+  Reg__usak      = regline_stats(Nao,usak      )
+  Reg__zonguldak = regline_stats(Nao,zonguldak )
+  Reg__bayburt   = regline_stats(Nao,bayburt   )
+  Reg__bartin    = regline_stats(Nao,bartin    )
+  Reg__yalova    = regline_stats(Nao,yalova    )
+  Reg__karabuk   = regline_stats(Nao,karabuk   )
+  Reg__duzce     = regline_stats(Nao,duzce     )
+
+
+
+   ;;;;;; Pearson Correlation
+
+       Pearson__afyon     = escorc(Nao,afyon     ) ;;-0.2475339
+       Pearson__amasya    = escorc(Nao,amasya    ) ;;-0.3809105
+       Pearson__artvin    = escorc(Nao,artvin    ) ;;0.2151777
+       Pearson__aydin     = escorc(Nao,aydin     ) ;;-0.2667985
+       Pearson__balikesir = escorc(Nao,balikesir ) ;;-0.4205633
+       Pearson__bilecik   = escorc(Nao,bilecik   ) ;;-0.384348
+       Pearson__bolu      = escorc(Nao,bolu      ) ;;-0.4059332
+       Pearson__bursa     = escorc(Nao,bursa     ) ;;-0.3053051
+       Pearson__canakkale = escorc(Nao,canakkale ) ;;-0.3719921
+       Pearson__denizli   = escorc(Nao,denizli   ) ;;-0.2804026
+       Pearson__edirne    = escorc(Nao,edirne    ) ;;-0.3209622
+       Pearson__giresun   = escorc(Nao,giresun   ) ;;0.1220713
+       Pearson__gumushane = escorc(Nao,gumushane ) ;;-0.08390732
+       Pearson__istanbul  = escorc(Nao,istanbul  ) ;;-0.4953752
+       Pearson__izmir     = escorc(Nao,izmir     ) ;;-0.3721904
+       Pearson__kastamonu = escorc(Nao,kastamonu ) ;;-0.3414291
+       Pearson__kirklareli= escorc(Nao,kirklareli) ;;-0.3043571
+       Pearson__kocaeli   = escorc(Nao,kocaeli   ) ;;-0.3922777
+       Pearson__kutahya   = escorc(Nao,kutahya   ) ;;-0.4216891
+       Pearson__manisa    = escorc(Nao,manisa    ) ;;-0.316596
+       Pearson__mugla     = escorc(Nao,mugla     ) ;;-0.217383
+       Pearson__ordu      = escorc(Nao,ordu      ) ;;0.09648566
+       Pearson__rize      = escorc(Nao,rize      ) ;;-0.3080532
+       Pearson__sakarya   = escorc(Nao,sakarya   ) ;;-0.1974178
+       Pearson__samsun    = escorc(Nao,samsun    ) ;;-0.2977444
+       Pearson__sinop     = escorc(Nao,sinop     ) ;;-0.1198337
+       Pearson__tekirdag  = escorc(Nao,tekirdag  ) ;;-0.3211089
+       Pearson__tokat     = escorc(Nao,tokat     ) ;;-0.06731202
+       Pearson__trabzon   = escorc(Nao,trabzon   ) ;;0.02845998
+       Pearson__usak      = escorc(Nao,usak      ) ;;-0.2353438
+       Pearson__zonguldak = escorc(Nao,zonguldak ) ;;-0.1490106
+       Pearson__bayburt   = escorc(Nao,bayburt   ) ;;-0.154707
+       Pearson__bartin    = escorc(Nao,bartin    ) ;;-0.1811949
+       Pearson__yalova    = escorc(Nao,yalova    ) ;;-0.1804635
+       Pearson__karabuk   = escorc(Nao,karabuk   ) ;;-0.02945672
+       Pearson__duzce     = escorc(Nao,duzce     ) ;;-0.287305
+
+
+
+
+;;;;;;Assigning Pearson Correlation results to map and plotting the shape file of provinces
+
+
+          dataa = asciiread("/Users/merihbozbura/Documents/Lectures/Data_Visualization/NCL_Project/pearson.txt" , (/36,3/), "float")
+
+          latt = dataa(:,0)
+          lonn = dataa(:,1)
+          valuess= dataa(:,2)
+
+          levelss  = (/0.3,0,-0.3,-0.6/)
+
+
+           pearsonC  = gsn_open_wks("png","pearson") ; send graphics to PNG file
+
+           qmres                     = True
+           qmres@mpLimitMode         = "Corners"     ; corner method of zoom
+           qmres@mpLeftCornerLatF    = 35            ; left corner
+           qmres@mpLeftCornerLonF    = 25          ; left corner
+           qmres@mpRightCornerLatF   = 42.5            ; right corner
+           qmres@mpRightCornerLonF   = 45           ; right corner
+           qmres@mpProjection        = "Mercator"    ; choose projection
+           qmres@mpInlandWaterFillColor   = "deepskyblue3"
+           qmres@mpOceanFillColor         = "deepskyblue3"
+           qmres@mpLandFillColor          = "burlywood3"
+           qmres@gsnDraw             = False         ; don't draw yet
+           qmres@gsnFrame            = False         ; don't advance frame yet
+           qmres@gsnMaximize = True
+           qmres@pmTickMarkDisplayMode = "Always"    ; turn on tickmarks
+           qmres@tiMainString = "Pearson Correlation Results of Provinces"
+           qmres@tiYAxisString            = "Latitude"        ; add a axis title
+           qmres@tiXAxisString            = "Longitude"
+           qmres@tiMainFontHeightF    = 0.020
+           qmres@tiXAxisFontHeightF   = 0.015
+           qmres@tiYAxisFontHeightF   = 0.015
+
+             mapp = gsn_csm_map(pearsonC,qmres)
+
+             ;---Creating a resource list for the markers.
+            marker = True
+            marker2=True
+            marker3 =True
+            ;---Arrays for attaching two sets of markers
+           yirmib_s   = new(nlevelss-1,graphic)
+           s_yirmib    = new(nlevelss-1,graphic)
+           yirmib_elli   = new(nlevelss-1,graphic)
+
+
+             ;---Drawing the markers
+
+
+             yirmib___s = ind(valuess.lt.levelss(0).and.valuess.ge.levelss(1))
+             marker@gsMarkerIndex = 16
+             marker@gsMarkerColor = "blue"
+             marker@gsMarkerSizeF =0.01
+             yirmib_s = gsn_add_polymarker(pearsonC,mapp,lonn(yirmib___s),latt(yirmib___s),marker)
+
+             s___yirmib  = ind(valuess.lt.levelss(1).and.valuess.ge.levelss(2))
+             marker2@gsMarkerIndex = 16
+             marker2@gsMarkerColor = "darkolivegreen"
+             marker2@gsMarkerSizeF =0.016
+             s_yirmib = gsn_add_polymarker(pearsonC,mapp,lonn(s___yirmib),latt(s___yirmib),marker2)
+
+             yirmib___elli  = ind(valuess.lt.levelss(2).and.valuess.ge.levelss(3))
+             marker3@gsMarkerIndex = 16
+             marker3@gsMarkerColor = "red"
+             marker3@gsMarkerSizeF =0.025
+             yirmib_elli = gsn_add_polymarker(pearsonC,mapp,lonn(yirmib___elli),latt(yirmib___elli),marker3)
+
+
+           plress = True
+           plres@gsLineColor = "black"
+
+           shape = addfile("/Users/merihbozbura/Documents/Lectures/Data_Visualization/NCL_Project/turkey_cities/TUR_adm1.shp" ,"r")
+           lines_idd = gsn_add_shapefile_polylines(pearsonC,mapp,"/Users/merihbozbura/Documents/Lectures/Data_Visualization/NCL_Project/turkey_cities/TUR_adm1.shp",plress)
+
+           Turkey_with_provinces = NhlAddOverlay(mapp,lines_idd,False)
+
+          txress=True
+          txress@txFontHeightF = 0.015
+
+
+              xleg = (/0.2,0.6,0.4/)   ; Location of
+              xtxt = (/0.35,0.75,0.55 /)   ; legend markers
+              yleg = (/0.16,0.16,0.10/)   ; and text
+              ytxt = (/0.16,0.16,0.10/)   ; strings.
+
+
+              gsn_polymarker_ndc(pearsonC, xleg(0) , yleg(0) , marker) ; plotting marker
+              gsn_text_ndc   (pearsonC,(/"0.3<Correlation<0"/),xtxt(0),ytxt(0),txress) ; plotting markers text
+
+              gsn_polymarker_ndc(pearsonC, xleg(1) , yleg(1) , marker2)
+              gsn_text_ndc   (pearsonC,(/"0<Correlation<=-0.3"/),xtxt(1),ytxt(1),txress)
+
+
+              gsn_polymarker_ndc(pearsonC, xleg(2) , yleg(2) , marker3) ; plotting marker
+              gsn_text_ndc   (pearsonC,(/"-0.3<Correlation<=-0.6"/),xtxt(2),ytxt(2),txress) ; plotting markers text
+
+
+
+           draw(mapp)
+           frame(pearsonC)
