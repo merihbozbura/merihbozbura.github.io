@@ -1,7 +1,6 @@
-
 ---
 layout: post
-title: Tracking Hurricane Katrina with Vorticity and Okubo Weiss Parameter with Python and R
+title: Principle Component Analysis with R
 ---
 
 #### **Tracking Hurricane Katrina with Vorticity and Okubo Weiss Parameter with Python and R**
