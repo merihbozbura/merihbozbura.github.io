@@ -9,6 +9,6 @@ I am gonna write a proper and explanatory post like in my first post.
 
 But now,
 
-If you want, you can find the whole document in R from [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih%20Bozbura.pdf) and the R script from [here.]()
+If you want, you can find the whole document in R from [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Katrina.pdf) and the R script from [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Script-katrina-R.pdf)
 
-Also, there is a python script in [here.]()
+Also, there are python scripts in [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/read_netcdf.py) and [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/katrina-python.txt)
