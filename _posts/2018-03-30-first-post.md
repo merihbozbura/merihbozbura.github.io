@@ -18,7 +18,7 @@ This is one of the subjects that I am curious about. So, I have shortly worked o
 
 
 
-##### **1.Introduction**
+#### **1.Introduction**
 
 The North Atlantic Oscillation (NAO) is a large-scale natural climate variability that has important impacts on the weather and climate of the North Atlantic region and surrounding continents, especially Europe [#2].
 
@@ -28,15 +28,15 @@ Therefore, NAO is expected to have an impact on Turkey. Weather and climate cond
 
 
 
-##### **2.Data and Method**
+#### **2.Data and Method**
 
-Precipitation data is observation data and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
+Precipitation data is annual observation data in millimeters(mm) and it includes all provinces of Turkey between 1970 and 2012. The North Atlantic Oscillation Index data can be found [here.](https://climatedataguide.ucar.edu/climate-data/hurrell-north-atlantic-oscillation-nao-index-pc-based) I merge two dataset into one **.csv** file. So, dataset have 83 variable, one of them is years, the other is NAO Indexes and the remain colums are 81 provinces of Turkey. 
 
 Firstly, exploratory data analysis are applied to understand fundamentals features of precipitation data. Secondly, linear regression is applied to see whether there is a relationship between NAO and precipitation or not. Finally, principle component analysis is applied to understand effect of NAO on precipitation. 
 
 
 
- ##### **3.Exploratory Data Analysis**
+#### **3.Exploratory Data Analysis**
 
 Exploratory data analysis is an approach to analyse a data [#3]. Hypothesis is determined as there is a relationship between precipitation and NAO for this study.
 
@@ -55,11 +55,11 @@ marmaraReg<-subset(PPrep, select = c("ckle","edir","ist","tkrd","yalv","kirk"
 shapiro.test(as.numeric(unlist(marmaraReg)))
 ```
 
-If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true)
+If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="60%" width="60%"}
 
 Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.
 
-![marmaraHist.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true) 
+![marmaraHist.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Hist_Marmara.jpeg?raw=true){:height="80%" width="80%"}
 
 Before constructing the histogram we need to split the data into intervals called bins. For all regions the equation below was used for bin width. **h** is bin width, **c** is a constant in the range of 2.0 and 2.6 (2.6 is optimal for Gaussian data), **IQR** is interquartile range, and **n** is number of data.
 
@@ -92,10 +92,10 @@ As it is seen from above, **IQR** function directly calculates interquartile ran
 
 Also, a barplot was plotted with **barplot** to see is there any oddness in the data. For example, we know that Rize is the wettest province in Turkey and its annual precipitation is about 2000 mm. If Rize has 3000 mm precipitation in the barplot, we must suspect about the data whether it is accurate or not. Also, average value of Turkey's precipitation is drawn with **abline** on the barplot.
 
-![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true)
+![barplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Barplot.jpeg?raw=true){:height="80%" width="80%"}
 
 
- ##### **4.Linear Regression**
+#### **4.Linear Regression**
 
 Turkey has seven regions and linear regression is applied between each region and NAO index with **lm** function. P-values of Marmara, Ege, Karadeniz, Akdeniz, Ic Anadolu, Dogu Anadolu, and Guneydogu Anadolu regions are respectively 0.003816, 0.1888, 0.05551, 0.4469, 0.7868, 0.9588, and 0.7791. Only, Marmara region rejects the null hypothesis which is there is no relationship between precipitation and NAO. However other regions do not reject the null hypothesis. With **plot(fit_marmaraReg,which=1:4)**, Residual vs Fitted, Normal Q-Q, Scale Location, and Cook’s distance were plotted.
 
@@ -114,7 +114,7 @@ plot(fit_marmaraReg,which=1:4)
 
 The **summary** of the linear model between Marmara region and NAO index is shown below.
 
-![summary](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/t.jpg?raw=true)
+![summary](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/t.jpg?raw=true){:height="80%" width="80%"}
 
 Marmara region is the independent variable and NAO index is the dependent variable in this linear model. 
 
@@ -131,29 +131,103 @@ Residual is the difference between fitted and actual dependent point. Fitted poi
 
 
 
-![resiualvsfitted](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Residual_Fitted.jpeg?raw=true)
+![resiualvsfitted](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Residual_Fitted.jpeg?raw=true){:height="80%" width="80%"}
 
 
-![Q-Q](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Normal_Q-Q.jpeg?raw=true)
+![Q-Q](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Normal_Q-Q.jpeg?raw=true){:height="80%" width="80%"}
 
 According to Normal Q-Q plot, residuals nearly folow the normal distribution. Also, in the Scale-Location plot, residuals are randomly distributed and there is no discernible pattern.
 
-![scale-loca](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scale_Location.jpeg?raw=true)
+![scale-loca](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scale_Location.jpeg?raw=true){:height="80%" width="80%"}
 
 Cook’s distance is used to find dominant points in independent variables. These points are far from the other points. In this case, 29th and 41st points are little away from the other points and 40th point are far from the other points as it is shown below. If the Cook’s distance is greater than 0.5, that point can be influencial, so it is worthy to examine [#4]. Cook’s distance of 40th point is greater than 0.5. If exceeding point equals about two times of average of data, it should be examined [#5]. 40th point is not greater or equal to the two times of average of data. So, it is not *worthy* for investigating.
 
-![Cooks](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Cooks.jpeg?raw=true)
+![Cooks](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Cooks.jpeg?raw=true){:height="80%" width="80%"}
+
+
+#### **5.Principle Component Analysis**
+
+Principal Component Analysis(PCA) is the oldest and the most famous multivariate statistical technique (Abdi and Williams, 2010). The goal of principal components analysis is to clarify th emaximum amount of variance with less number of principal components. It is used for reducing dimension of very **big datasets** in addition to keep most of the information in the **big dataset**. R function of principle component analysis pulls the data normal distribution with centring and scale arguments. Before applying PCA, precipitation data was scaled and standardized since the scale between NAO indexes and precipitation is large. Marmara region, Karadeniz and Ege regions are chosen to examine. In PCA, a new coordinate system is placed on the dataset, this is shown below. 
+
+
+![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true){:height="80%" width="80%"}
+Source: (Swan and Sandilands, 1995, p.446)
+
+
+
+**Firstly**, scree plots or percent variance plots are examined to determine the number of principle components that are enough to explain dataset. According to the Kaiser’s Criterion, if eigenvalues are greater than 1, these PCs can be taken [#6]. **Secondly**, interpreting how much do variables contribute to the principle components by looking the loadings. **Finally**, interpreting and understanding distribution of the variables in this classification by examining the scores.
+
+As it is mentioned above, *center* substracts the mean from each data point and *scale* divides each data point to standard deviation, after that **prcomp** function calculates the eigenvalues, loadings and scores. There is another function to do PCA which is **princomp()** in R that I haven't tried yet. 
+
+The *eigenvalues* are the amount of variation along new axes kept by each PC. *Loadings* are the correlations between the variables and PCs. *Scores* are the positions of each data point in this new coordinate system. After obtainig eigenvalues, the variances is turned to percentage to plot. You can see summation of percent variances reach 100 % with cumulative summation **(cumsum)** function. **Percent variances** was plotted with *barplot* function with a red horizontal line on it as it is seen below. This horizontal red line is that if each variable devoted equally, they would devote 2.8% to the total variance since there are thirty six variables(number of provinces). **Fisrt fourteen** PCs represent 77.37% of the data. 
+
+![percent](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Percent_Stand.jpeg?raw=true){:height="80%" width="80%"}
+
+```r
+pca <- prcomp(mar_kar_ege_s, center = TRUE, scale. = TRUE)
+
+pca_sd <- pca$sdev  
+loadings_pca <- pca$rotation
+scores_pca <- pca$x
+
+var_pca <- pca_sd^2  # Eigenvalues
+var.percent_pca <- var_pca/sum(var_pca) * 100 # Explained variation by PCs.
+
+cumvar <- cumsum(var.percent_pca) # Cumulative variance
+
+barplot(var.percent_pca, xlab="PC", ylab="Percent Variance", names.arg=1:length(var.percent_pca), las=1, ylim=c(0,max(var.percent_pca)), col="gray", main = "Percent Variance for Scaled Data")
+abline(h=1/ncol(mar_kar_ege_s)*100, col="red")
+
+screeplot(pca, type = "lines", main = "Variances of PCs of Scaled Precipitation Data") 
+# another function to plot variation of variance
+abline(h = 1,lty = 3, col = "red")
+
+loadings_pca
+
+dev.new(height=7, width=7)
+biplot(scores_pca[,1:14],loadings_pca[,1:14], cex = 0.8, main = "Distance Biplot of Scaled Precipitation") 
+```
+
+Also, there is another method to determine the number of principal components which is **scree plot** as it is shown below. According to Kaiser’s Criterion mentioned above, if eigenvalues are greater than 1, these PCs can be taken. So, blue dashed line shows that first fourteen PCs can be taken and they represent 77.37% of the dataset. To plot this graphic, **screeplot**
+function was used as it seen from the code.
+
+
+![scree](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Scree_Stand.jpeg?raw=true){:height="80%" width="80%"}
+
+The distribution of the data points(rotation of original data points) in this new coordinate system is represented with **biplot** using scores(positions) and loadings(rotations). Biplot pops up in the screen like new window instead of appearing in R Studio's plot section with **dev.new** function and biplot is plotted with **biplot** function.
+
+
+![biplot](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Stan_Biplot.jpeg?raw=true){:height="80%" width="80%"}
+ 
+*According to biplot above*, Istanbul, Balikesir, Kirklareli, Manisa, Kastamonu, Canakkale are near each other and Bursa, Tekirdag, Gumushane, Yalova, Sakarya, and Izmir are near each other and Amasya, Bilecik, Kutahya, Bolu are near each other and Edirne, Kocaeli, and Rize are near each other. **These provinces are the provinces with significant p-values.** 
+
+Also, Zonguldak, Giresun, Trabzon, Bartın, and Bayburt are near each other and Düzce, Afyon, Aydın are near each other and Tokat and Samsun are near each other. **These provinces are not the provinces with significant p-values.** 
+
+Istanbul, Balıkesir, Kırklareli, Manisa, Kastamonu, Canakkale are near each other, so they can be used **interchangeably.**
+Therefore, dimension can be reduced. Reducing dimension can be applied for **all the groups of provinces** that mentioned above.
+
+Besides, principle component analysis was applied to the scaled precipitaiton data and you can read it in the [document](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih%20Bozbura.pdf) if you want. 
+
+In this PC Analysis, Kutahya, Manisa, Izmir, Edirne, Kirklareli are near each other and Bolu, Yalova, Bursa, Istanbul, Balikesir, Canakkale, Tekirdag, Kastamonu, Bilecik, Sakarya, and Kocaeli are near each other. **These provinces are the provinces with significant p-values.** 
+
+Also, Bartin, Zongudak, Karabuk, Gumushane, Tokat, Sinop, Trabzon, Giresun, Artvin, Samsun, Bayburt, and Ordu are near each other and Duzce, Afyon, Aydın are near each other and **these provinces are not the provinces with significant p-values.** Kütahya, Manisa, Izmir,Edirne, Kırklareli are near each other, so they can be used **interchangeably.**
+
+
+#### **6.Conclusions**
+
+* Exploratory data analysis is applied to understand the datasets and linear regression analysis is applied to find out whether there is a relationship or not between precipitation and NAO index datasets. 
+
+* Only, Marmara region rejects the null hypothesis is found out and to investigate NAO’s effect, Ege and Karadeniz regions are choosen in addition to Marmara region. 
+
+* Principle component analysis are applied to three region which contains *thirty six* provinces. As it is seen in section 4 and section 5, the provinces with **significant p-values** and **grouped provinces** that are obtained from **principle component analysis** are nearly same except few provinces. Also, Marmara region has significant p-value. In the light of these informations, **precipitation is affected by North Atlantic Oscillation can be said.**
+
+
+If you want to see position of provinces, you can check it out [here.](http://cografyaharita.com/haritalarim/4lturkiye-mulki-idare-sistemleri-haritasi1.png)
 
 
 
 
-
-
-
-
-
-
-#### **References**
+### **References**
 
 [#2]: https://www.ncdc.noaa.gov/teleconnections/nao/
 
@@ -165,10 +239,13 @@ Cook’s distance is used to find dominant points in independent variables. Thes
 
 [#5]: http://polisci.msu.edu/jacoby/icpsr/regress3/lectures/week3/11.Outliers.pdf
 
+[#6]: http://people.stat.sc.edu/habing/courses/530EFA.pdf
+
 **Wilks, D. S.** (2006). Statistical Methods in the Atmospheric Sciences (2nd ed., Vol. 91).
 
+**Abdi, H. and Williams, L. J.** Principal component analysis, Wiley 45 Interdisciplinary Reviews: Computational Statistics, 2, 433–459, doi:10.1002/wics.101, 2010.
 
-
+**Swan, A.R.H., and M. Sandilands**, 1995. Introduction to Geological Data Analysis. Blackwell Science: Oxford, 446 p.
 
 
 
