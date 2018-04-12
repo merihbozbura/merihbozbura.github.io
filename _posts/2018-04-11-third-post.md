@@ -1,14 +1,13 @@
 ---
 layout: post
-title: Tracking Hurricane Katrina with Vorticity and Okubo Weiss Parameter with Python and R
+title: Pearson Correlation with NCAR Command Language (NCL)
 ---
 
-#### **Tracking Hurricane Katrina with Vorticity and Okubo Weiss Parameter with Python and R**
+#### **Pearson Correlation with NCAR Command Language (NCL)**
 
 I am gonna write a proper and explanatory post like in my first post. 
 
 But now,
 
-If you want, you can find the whole document in R from [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Katrina.pdf) and the R script from [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Script-katrina-R.pdf)
+If you want, you can find the whole document from [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih-Bozbura-ncl.pdf) and the NCL script from [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Merih_Bozbura-ncl.txt)
 
-Also, there are python scripts in [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/read_netcdf.py) and [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/katrina-python.txt)
