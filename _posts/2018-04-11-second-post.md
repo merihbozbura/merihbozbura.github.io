@@ -11,4 +11,4 @@ But now,
 
 If you want, you can find the whole document in R from [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Katrina.pdf) and the R script from [here.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/Script-katrina-R.pdf)
 
-Also, there are python scripts in [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/read_netcdf.py) and [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/katrina-python.txt)
+Also, there are python scripts in [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/netcdf_functions.py) and [here](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/files/katrina-python.py)
