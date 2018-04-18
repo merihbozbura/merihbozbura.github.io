@@ -55,7 +55,7 @@ marmaraReg<-subset(PPrep, select = c("ckle","edir","ist","tkrd","yalv","kirk"
 shapiro.test(as.numeric(unlist(marmaraReg)))
 ```
 
-If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="60%" width="60%"}
+If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="80%" width="80%"}
 
 Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.
 
