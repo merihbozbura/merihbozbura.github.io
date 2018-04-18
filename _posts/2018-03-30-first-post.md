@@ -151,6 +151,7 @@ Principal Component Analysis(PCA) is the oldest and the most famous multivariate
 
 
 ![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true){:height="80%" width="80%"}
+
 Source: (Swan and Sandilands, 1995, p.446)
 
 
