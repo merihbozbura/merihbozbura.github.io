@@ -55,7 +55,7 @@ marmaraReg<-subset(PPrep, select = c("ckle","edir","ist","tkrd","yalv","kirk"
 shapiro.test(as.numeric(unlist(marmaraReg)))
 ```
 
-If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="60%" width="60%"}
+If you uses **View()** function, the read csv file is shown like in this image. ![blury.](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/blury.jpg?raw=true){:height="80%" width="80%"}
 
 Histogram of Marmara region has right skewed distribution. A few larger values bring the mean upwards. It is the closest region to normal distribution compared to the other regions and it is expected by looking Shapiro-Wilk normality test results. Also, other reginos are right skewed.
 
@@ -151,8 +151,9 @@ Principal Component Analysis(PCA) is the oldest and the most famous multivariate
 
 
 ![coordinate](https://github.com/merihbozbura/merihbozbura.github.io/blob/master/images/Screen%20Shot%202018-04-01%20at%2013.51.25.png?raw=true){:height="80%" width="80%"}
-Source: (Swan and Sandilands, 1995, p.446)
 
+
+Source: (Swan and Sandilands, 1995, p.446)
 
 
 **Firstly**, scree plots or percent variance plots are examined to determine the number of principle components that are enough to explain dataset. According to the Kaiser’s Criterion, if eigenvalues are greater than 1, these PCs can be taken [#6]. **Secondly**, interpreting how much do variables contribute to the principle components by looking the loadings. **Finally**, interpreting and understanding distribution of the variables in this classification by examining the scores.
